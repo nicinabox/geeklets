@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+
+%x(uptime).gsub(/([0-9] days)/) { |d| puts d }

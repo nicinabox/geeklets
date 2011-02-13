@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+require 'trollop'
+require 'gmail'
+
+opts = Trollop::options do
+  opt :user, "Username", :required => true, :type => String
+  opt :pass, "Password", :required => true, :type => String 
+end
+
+gmail = Gmail.new(opts[:user], opts[:pass])
+puts "#{gmail.inbox.count(:unread)} unread"

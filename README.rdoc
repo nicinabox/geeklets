@@ -4,11 +4,11 @@ A collection of Geektool scripts wrapped in a gem.
 
 == Included
 
-airport
-growl
-ipaddrss
-network
-weather
+1. +airport+
+2. +growl+
+3. +ipaddress+
+4. +network+
+5. +weather+
 
 == Copyright
 
