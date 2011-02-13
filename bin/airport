@@ -1,8 +1,9 @@
 #!/usr/bin/env ruby
-
-airport = %x(system_profiler SPAirPortDataType).split("\n\n")
-info = airport[1].split("\n")
-info.each do |i|
-  i.strip!
+require 'active_support/inflector'
+airport = %x(/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I).split("\n")
+info = []
+airport.each do |a|
+  a.strip!
+  info << a.split(/: /)
 end
-puts "Network: #{info[18].chop}"
+puts "Network: #{info[12].last}"
