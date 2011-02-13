@@ -1,26 +1,26 @@
 #!/usr/bin/env ruby
 
-en0 = %x(ifconfig en0 | grep "inet" | grep -v 127.0.0.1)
-en1 = %x(ifconfig en1 | grep "inet" | grep -v 127.0.0.1)
-$airport_info = `/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I`;
+en0 = %x(ifconfig en0 | grep "inet" | grep -v 127.0.0.1).split(/\n/)
+en1 = %x(ifconfig en1 | grep "inet" | grep -v 127.0.0.1).split(/\n/)
 
-if($en0_info)
-{
-    $en0_info =~ /inet (.*) netmask/s;
-    $output .= "Ethernet : $1\n";
-
-}
+unless en0.empty?
+  en0.each do |e|
+    e.strip!
+  end
+  ip = en0[1].split(/ /)
+  en0 = "Ethernet: #{ip[1]}"
 else
-{ $output .= "Ethernet : INACTIVE\n";}
+  en0 = "Ethernet: INACTIVE\n"
+end
 
-
-if($en1_info)
-{
-    $en1_info =~ /inet (.*) netmask/s;
-    $en1_info = $1;
-    $output .= "Airport  : $en1_info\n\n";
-}
+unless en1.empty?
+  en1.each do |e|
+    e.strip!
+  end
+  ip = en1[1].split(/ /)
+  output = "Airport: #{ip[1]}\n#{en0}"
 else
-{ $output .= "Airport  : INACTIVE\n\n";}
+  output = "Airport: INACTIVE\n#{en0}"
+end
 
-print "$output";
+puts output
