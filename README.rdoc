@@ -1,6 +1,11 @@
 = geeklets
 
-Description goes here.
+A collection of Geektool scripts wrapped in a gem.
+
+== Included
+
+
+
 
 == Contributing to geeklets
  

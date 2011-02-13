@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+airport = %x(system_profiler SPAirPortDataType).split("\n\n")
+info = airport[1].split("\n")
+info.each do |i|
+  i.strip!
+end
+puts "Network: #{info[18].chop}"
