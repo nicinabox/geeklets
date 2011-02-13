@@ -25,6 +25,7 @@ Jeweler::Tasks.new do |gem|
   #  gem.add_development_dependency 'rspec', '> 1.2.3'
   gem.add_runtime_dependency 'ruby-gmail', '> 0.1'
   gem.add_runtime_dependency 'trollop', '> 0.1'
+  gem.add_runtime_dependency 'crack', '> 0.1'
 end
 Jeweler::RubygemsDotOrgTasks.new
 

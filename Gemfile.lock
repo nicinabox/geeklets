@@ -2,6 +2,7 @@ GEM
   remote: http://rubygems.org/
   specs:
     activesupport (3.0.4)
+    crack (0.1.8)
     git (1.2.5)
     i18n (0.5.0)
     jeweler (1.5.2)
@@ -30,6 +31,7 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 1.0.0)
+  crack
   jeweler (~> 1.5.2)
   rcov
   ruby-gmail

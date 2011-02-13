@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+require 'trollop'
+require 'crack'
+
+opts = Trollop::options do
+  opt :zip, "Zip code", :type => Integer,  :required => true
+  opt :units, "Units (C or F)", :default => "F"       
+end
+
+weather_xml = %x(curl --silent "http://xml.weather.yahoo.com/forecastrss?p=#{opts[:zip]}&u=#{opts[:units]}")
+weather = Crack::XML.parse(weather_xml)
+
+condition = weather["rss"]["channel"]["item"]["yweather:condition"]
+
+puts "#{condition["text"]}, #{condition["temp"]}#{opts[:units].upcase}"
