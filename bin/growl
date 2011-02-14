@@ -77,7 +77,7 @@ end
 uname = %x(uname)
 case uname
 when "Linux" || "Windows_NT"
-  ssh opts[:address] opts[:install] opts
+  %x(ssh #{opts[:address]} #{opts[:install]} #{opts})
 else
   growl opts
 end
