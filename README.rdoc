@@ -4,11 +4,12 @@ A collection of Geektool scripts wrapped in a gem.
 
 == Included
 
-1. +airport+
-2. +growl+
-3. +ipaddress+
-4. +network+
-5. +weather+
+1. +airport+ (network currently connected)
+2. +growl+ (growl notifications)
+3. +ipaddress+ (Internal Ethernet & Airport)
+4. +network+ (In/Out activity)
+5. +up+ (System uptime)
+6. +weather+ (Current weater)
 
 == Copyright
 
