@@ -12,7 +12,7 @@ opts = Trollop::options do
   opt :high,      "priority  [1]"
   opt :emergency, "priority  [2]"
   opt :title,     "Used as the Growl message title.", :default => "Notification"
-  opt :application, "Used as the Growl message title.", :default => "Shell Script Growl Message"
+  opt :application, "Used by Growl to manage a set of message configurations.", :default => "Shell Script Growl Message"
   opt :icon,      "Display this application's icon", :default => "Terminal.app"
 end
 
