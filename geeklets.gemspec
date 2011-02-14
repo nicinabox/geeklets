@@ -32,6 +32,7 @@ Gem::Specification.new do |s|
     "bin/network",
     "bin/up",
     "bin/weather",
+    "geeklets.gemspec",
     "lib/geeklets.rb",
     "test/helper.rb",
     "test/test_geeklets.rb"
