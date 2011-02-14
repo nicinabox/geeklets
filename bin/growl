@@ -70,14 +70,14 @@ def growl opts
   end tell
   EOD
 
-  %x(osascript <<-GROWL\n#{script}\nGROWL)
+  %x(/usr/bin/osascript <<-GROWL\n#{script}\nGROWL)
 end
 
 # Remote message
 uname = %x(uname)
 case uname
 when "Linux" || "Windows_NT"
-  %x(ssh #{opts[:address]} #{opts[:install]} #{opts})
+  %x(ssh #{opts[:address]} '#{opts[:install]} #{opts})
 else
   growl opts
 end
