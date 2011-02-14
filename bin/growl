@@ -3,17 +3,46 @@ require 'trollop'
 
 opts = Trollop::options do
   opt :message,   "Message to display", :required => true, :type => String
-  opt :sticky,    "Stays on screen until dismissed", :default => "no"
-  opt :nosticky,  "Goes away after several seconds."
+  opt :sticky,    "Stays on screen until dismissed", :default => false
   opt :priority,  "Priority -2,-1,0,1,2", :type => Integer, :default => 0 
-  opt :verylow,   "priority [-2]"
-  opt :moderate,  "priority [-1]"
+  opt :low,       "priority [-1]"
+  opt :moderate,  "priority  [1]"
   opt :normal,    "priority  [0]", :default => true 
-  opt :high,      "priority  [1]"
-  opt :emergency, "priority  [2]"
+  opt :high,      "priority  [2]"
+  opt :emergency, "priority  [3]"
   opt :title,     "Used as the Growl message title.", :default => "Notification"
   opt :application, "Used by Growl to manage a set of message configurations.", :default => "Shell Script Growl Message"
   opt :icon,      "Display this application's icon", :default => "Terminal.app"
+end
+
+if opts[:emergency]
+  opts[:title] = "Emergency Priority"
+  opts[:sticky] = "yes"
+  opts[:priority] = 3
+end
+if opts[:high]
+  opts[:title] = "High Priority"
+  opts[:sticky] = "yes"
+  opts[:priority] = 2
+end
+if opts[:moderate]
+  opts[:title] = "Moderate Priority"
+  opts[:sticky] = "yes"
+  opts[:priority] = 1
+end
+if opts[:nomral]
+  opts[:title] = "Normal Priority"
+  opts[:sticky] = "yes"
+  opts[:priority] = 0
+end
+if opts[:low]
+  opts[:title] = "Low Priority"
+  opts[:priority] = -1
+end
+if opts[:sticky]
+  opts[:sticky] = "yes"
+else
+  opts[:sticky] = "no"
 end
 
 script = <<-EOD
