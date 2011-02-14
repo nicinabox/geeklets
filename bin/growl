@@ -16,8 +16,7 @@ opts = Trollop::options do
   opt :icon,      "Display this application's icon", :default => "Terminal.app"
 end
 
-description = opts
-string = <<-EOD
+script = <<-EOD
 tell application "GrowlHelperApp"
    -- Make a list of all the notification types that this script will ever send:
    set the allNotificationsList to {"#{opts[:application]}"}
@@ -38,5 +37,5 @@ end tell
 EOD
 
 `osascript <<-EOD
-#{string}
+#{script}
 EOD`
