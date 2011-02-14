@@ -13,8 +13,11 @@ opts = Trollop::options do
   opt :title,     "Used as the Growl message title.", :default => "Notification"
   opt :application, "Used by Growl to manage a set of message configurations.", :default => "Shell Script Growl Message"
   opt :icon,      "Display this application's icon", :default => "Terminal.app"
+  opt :address,   "Address to send notifications to"
+  opt :install,   "Remote install of Growl", :default => "growl"
 end
 
+# Setup priority rules
 if opts[:emergency]
   opts[:title] = "Emergency Priority"
   opts[:sticky] = "yes"
@@ -45,26 +48,36 @@ else
   opts[:sticky] = "no"
 end
 
-script = <<-EOD
-tell application "GrowlHelperApp"
-   -- Make a list of all the notification types that this script will ever send:
-   set the allNotificationsList to {"#{opts[:application]}"}
+# Send message
+def growl opts
+  script = <<-EOD
+  tell application "GrowlHelperApp"
+     -- Make a list of all the notification types that this script will ever send:
+     set the allNotificationsList to {"#{opts[:application]}"}
 
-   -- Make a list of the notifications that will be enabled by default.      
-   -- Those not enabled by default can be enabled later in the 'Applications'
-   -- tab of the growl prefpane.
-   set the enabledNotificationsList to {"#{opts[:application]}"}
+     -- Make a list of the notifications that will be enabled by default.      
+     -- Those not enabled by default can be enabled later in the 'Applications'
+     -- tab of the growl prefpane.
+     set the enabledNotificationsList to {"#{opts[:application]}"}
 
-   -- Register our script with growl.  You can optionally (as here) set a
-   -- default icon for this script's notifications.
-   register as application "#{opts[:application]}" all notifications allNotificationsList default notifications enabledNotificationsList icon of application "#{opts[:icon]}"
+     -- Register our script with growl.  You can optionally (as here) set a
+     -- default icon for this script's notifications.
+     register as application "#{opts[:application]}" all notifications allNotificationsList default notifications enabledNotificationsList icon of application "#{opts[:icon]}"
 
-   -- Send a Notification...
-   notify with name "#{opts[:application]}" title "#{opts[:title]}" description "#{opts[:message]}" application name "#{opts[:application]}" sticky #{opts[:sticky]} priority #{opts[:priority]}
+     -- Send a Notification...
+     notify with name "#{opts[:application]}" title "#{opts[:title]}" description "#{opts[:message]}" application name "#{opts[:application]}" sticky #{opts[:sticky]} priority #{opts[:priority]}
 
-end tell
-EOD
+  end tell
+  EOD
 
-`osascript <<-EOD
-#{script}
-EOD`
+  %x(osascript <<-GROWL\n#{script}\nGROWL)
+end
+
+# Remote message
+uname = %x(uname)
+case uname
+when "Linux" || "Windows_NT"
+  ssh opts[:address] opts[:install] opts
+else
+  growl opts
+end
